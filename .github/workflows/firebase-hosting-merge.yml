@@ -10,7 +10,16 @@ jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: 'true'
+      - name: Run hugo
+        uses: crazy-max/ghaction-hugo@v3
+        with:
+          version: latest
+          extended: false
+          args: --cleanDestinationDir --minify --verbose
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
