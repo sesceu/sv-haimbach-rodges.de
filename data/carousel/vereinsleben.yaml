@@ -1,0 +1,9 @@
+weight: 1
+title: "Vereinsleben"
+description: >
+  <ul class="list-style-none">
+     <li>gemütliches Beisammensein</li>
+     <li>gemeinsame Erfolge</li>
+  </ul>
+image: "img/carousel/koenigsfamilie.jpg"
+frame: true
