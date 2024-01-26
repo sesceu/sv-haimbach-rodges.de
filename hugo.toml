@@ -15,6 +15,9 @@ paginate = 10
 # not pluralize title pages by default
 pluralizelisttitles = false
 
+[menu]
+
+
 # Main menu
 [[menu.main]]
     name       = "Startseite"
@@ -48,7 +51,7 @@ pluralizelisttitles = false
 
 [params]
     viewMorePostLink = "/blog/"
-    author = "XXXDevCows"
+    author = "Schneider"
     defaultKeywords = ["Schützenverein", "Fulda", "Haimbach", "Rodges", "Schießsport"]
     mainSections = ["blog"]
     defaultDescription = "Site template made by Devcows using Hugo"
