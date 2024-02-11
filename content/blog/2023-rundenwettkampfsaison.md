@@ -1,8 +1,8 @@
 +++
-title = 'Rundenwettkampfsaison (RWK) 2023-2024'
+title = 'Rundenwettkampf-Saison (RWK) 2023-2024'
 date = 2024-01-26T19:19:08+01:00
 draft = false
-banner = "img/2023-rundenwettkampfsaison/banner.jpg"
+banner = "img/default/gewehr_zielen.jpg"
 +++
 
 Die Wettkampfpläne für die Luftgewehr-RWK 2023-2024 liegen vor.
