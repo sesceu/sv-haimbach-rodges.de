@@ -17,6 +17,8 @@ pluralizelisttitles = false
 
 assetDir = "static"
 
+timeout = "120s"
+
 [menu]
 
 
@@ -47,8 +49,8 @@ assetDir = "static"
 
 [[menu.main]]
     name       = "Bilder"
-    identifier = "menu.bilder"
-    url        = "/bilder"
+    identifier = "menu.gallery"
+    url        = "/gallery"
     weight     = 5
 
 [params]
