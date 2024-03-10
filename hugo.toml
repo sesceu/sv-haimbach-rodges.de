@@ -1,6 +1,6 @@
 baseURL = 'https://sv-haimbach-rodges-de.web.app/'
 languageCode = 'de-DE'
-title = 'Schützenverein "Gut Schuß" Haimbach/Rodges'
+title = 'Schützenverein Gut Schuß Haimbach/Rodges'
 theme = 'hugo-universal-theme'
 
 defaultContentLanguage = "de"
@@ -36,21 +36,21 @@ timeout = "120s"
     weight     = 2
 
 [[menu.main]]
-    name       = "Jugend"
-    identifier = "menu.jugend"
-    url        = "/jugend"
-    weight     = 3
-
-[[menu.main]]
     name       = "Historie"
     identifier = "menu.historie"
     url        = "/historie"
-    weight     = 4
+    weight     = 3
 
 [[menu.main]]
     name       = "Bilder"
     identifier = "menu.gallery"
     url        = "/gallery"
+    weight     = 4
+
+[[menu.main]]
+    name       = "Links"
+    identifier = "menu.links"
+    url        = "/links"
     weight     = 5
 
 [params]
