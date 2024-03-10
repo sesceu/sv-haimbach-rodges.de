@@ -1,6 +1,6 @@
 +++
 title = 'Glühwein und Jahresabschluss'
-date = 2024-01-26T19:17:36+01:00
+date = 2023-12-11T15:15:00+01:00
 draft = false
 banner = "img/default/gluehwein.jpg"
 banner_attribution = "https://pixabay.com/de/photos/winter-schnee-kalt-tee-wein-4606871/"

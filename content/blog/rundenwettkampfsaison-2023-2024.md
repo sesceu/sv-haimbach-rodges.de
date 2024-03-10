@@ -1,17 +1,13 @@
 +++
 title = 'Rundenwettkampf-Saison (RWK) 2023-2024'
-date = 2024-01-26T19:19:08+01:00
+date = 2024-02-23T15:48:00+01:00
 draft = false
 banner = "img/default/gewehr_zielen.jpg"
 banner_attribution = "https://unsplash.com/de/fotos/person-die-auf-die-waffe-zielt-HmMVzPlwM4E"
 +++
 
-Die Wettkampfpläne für die Luftgewehr-RWK 2023-2024 liegen vor.
-Unsere Mannschaft schießt im Schützenbezirk 27 Fulda-Rhön in der Bezirksklasse 3 West.
+Die Luftgewehr-Rundenwettkämpfe 2023-2024 sind abgeschlossen. Unsere Mannschaft belegte im Schützenbezirk 27 Fulda-Rhön in der Bezirksklasse 3 West den 2. Platz.
 
-Start war am 27.10.2023 mit einem Heimkampf gegen Buchenrod 3 und der letzte Kampf findet am 16.02.2024 in Ried statt.
+Die besten Einzelergebnisse erzielten Mira Müller mit 349 Ringen und Martin Röhm mit 341 Ringen. Herzlichen Glückwunsch euch beiden, aber auch der gesamten Mannschaft mit den weiteren Schützen Marc Engel, Thomas Svoboda und Dirk Müller.
 
-Wir wünschen unseren Mannschaftsschützinnen und -schützen viel Erfolg und insbesondere Zuschauer-Unterstützung bei den Heimkämpfen (Übertragung auf Bildschirm)!
-Den gesamten Terminplan findet ihr [hier](https://sv-haimbach-rodges.de/Bilder/Bilder?path=/2024/&mode=p)!
-
-Alle Ergebnisse, namentliche Schützen und Platzierungen findet ihr auf der Website des Schützenbezirks 27 [hier](https://www.rwk-onlinemelder.de/online/listen/hsvsb27?sel_group_id=27&sel_discipline_id=4&sel_class_id=20&sel_list_type=competitionSchedule&sel_turn_date=&showCombined=0)!
+Den gesamten Wettkampfverlauf, Gesamt- und Einzelergebnisse findet ihr auf der Website des Schützenbezirks 27 [hier](https://www.rwk-onlinemelder.de/online/listen/hsvsb27?sel_group_id=27&sel_discipline_id=4&sel_class_id=20&sel_list_type=competitionSchedule&sel_turn_date=&showCombined=0)!
