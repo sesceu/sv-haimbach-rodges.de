@@ -3,6 +3,7 @@ title = 'Fasching und Rosenmontag'
 date = 2024-02-02T19:19:08+01:00
 draft = false
 banner = "img/default/luftschlangen.jpg"
+banner_attribution = "https://pixabay.com/de/photos/luftschlangen-konfetti-fasnacht-1194567/"
 +++
 
 Liebe Vereinsmitglieder/innen,
