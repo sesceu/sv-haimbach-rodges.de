@@ -39,25 +39,27 @@ Gründungsversammlung des Schützenvereins „Gut Schuß“ Haimbach / Rodges in
 
 12 Gründungsmitglieder wurden registriert und stellten den damaligen Vorstand. Die Gründungsmitglieder und ihre Ämter:
 
-||border=0
-||Günter Schneider ||1. Vorsitzender ||
-||Gerhard Bosold ||2.Vorsitzender ||
-||Gertrud Engel ||1. Kassierer ||
-||Claudia Bosold ||1. Schriftführer ||
-||Willi Engel ||1. Schützenmeister ||
-||Winfried Medler-Woepe ||2.Schützenmeister ||
-||Karlo Schneider ||Waffen- und Gerätewart ||
-||Margret Medler-Woepe ||Beisitzerin ||
-||Hannelore Schneider ||Beisitzerin ||
-||Robert Fischer ||Kassenprüfer ||
-||Gabriele Schneider ||Kassenprüferin ||
-||Ewald Gerk ||Wahlleiter ||
-
+| Name | Amt |
+|:-----|:---------|
+|Günter Schneider |1. Vorsitzender |
+|Gerhard Bosold |2.Vorsitzender |
+|Gertrud Engel |1. Kassierer |
+|Claudia Bosold |1. Schriftführer |
+|Willi Engel |1. Schützenmeister |
+|Winfried Medler-Woepe  |2.Schützenmeister |
+|Karlo Schneider |Waffen- und Gerätewart |
+|Margret Medler-Woepe |Beisitzerin |
+|Hannelore Schneider |Beisitzerin |
+|Robert Fischer |Kassenprüfer |
+|Gabriele Schneider |Kassenprüferin |
+|Ewald Gerk |Wahlleiter |
+  
+  
 Der neue Vorstand war sich schnell einig, dass sich der junge Verein auch mit sofortiger Wirkung an den Proklamationen und Umzügen der Schützenvereine im Schützenkreis 61 beteiligen sollte. 
 
-Für solche, öffentlichen Auftritte wurde eine einheitliche Kleiderordnung festgelegt:\\
-'''Männer:''' schwarze Hose, weißes Hemd, dunkle Jacke – Vereinswappen an der linken Brusttasche.\\
-'''Frauen:''' dunkle Röcke, möglichst schwarz,  weiße Blusen, rosa Trachten – Halstuch.
+Für solche, öffentlichen Auftritte wurde eine einheitliche Kleiderordnung festgelegt:  
+**Männer:** schwarze Hose, weißes Hemd, dunkle Jacke – Vereinswappen an der linken Brusttasche.  
+**Frauen:** dunkle Röcke, möglichst schwarz,  weiße Blusen, rosa Trachten – Halstuch.
 
 Zum Training fuhren die schießbegeisterten Mitglieder nun regelmäßig zum „großen Bruder“ nach Fulda.
 Doch den neuen Verein drängte es, eine eigene Schießbahn zu besitzen. Als geeignete Räumlichkeit bot sich der Saal der Gaststätte „Goldener Stern“ an, wo alles angefangen hatte. Unser Vereinswirt Heribert Theiß konnte für die Idee gewonnen werden und so wurde eine Schießanlage gezimmert, 4 Seilzuganlagen und 2 Gewehre gekauft.  
@@ -90,7 +92,7 @@ Das Fest fand bei der Bevölkerung großen Anklang und auch bei den Schützenver
 Erste Kontakte zu einem Patenverein nach Pleidelsheim in Baden – Württemberg wurden aufgenommen. 
 Unser Mitglied Harald Goller legte dazu den Grundstein.
 
-{{< images "/img/album/1987/königsfamilie.jpg" "/img/album/1987/Schützenfest.jpg" "/img/album/1987/Schützenkönig_1_Vorsitzender.jpg" >}}
+{{< images "/img/album/1987/königsfamilie.jpg" "/img/album/1987/Schützenfest.jpg" "/img/album/1987/Schützenkönig_1_Vorsitzender.jpg|Schützenkönig & 1. Vorsitzender" >}}
 
 #### Samstag, 19. bis Sonntag, 20. September 1987
 Am 19/20. September 1987 war es dann soweit, der erste Besuch in Pleidelsheim fand statt. Bei diesem Besuch wurde auch ein Wettkampf im Kleinkaliberschießen (50 m) ausgetragen, bei dem Gerhard Bosold den 1. und Hannelore Schneider den 2. Platz belegten.
