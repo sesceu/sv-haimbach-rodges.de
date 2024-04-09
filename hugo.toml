@@ -85,7 +85,7 @@ timeout = "120s"
     copyright = "Copyright (c) 2024, Schützenverein \"Gut Schuß\" Haimbach/Rodges 1986 e.V."
 
     # Format dates with Go's time formatting
-    date_format = "2. Januar 2006"
+    date_format = "2. January 2006"
 
     dropdown_mouse_over = false
 
