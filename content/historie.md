@@ -76,9 +76,9 @@ Für einen reibungslosen Ablauf sorgte ein eigens dafür aufgestellter Arbeitspl
 #### Samstag, 18. Oktober 1986
 Am 18. Oktober 1986 fand die offizielle Gründungsfeier in unserem Vereinslokal statt. 
 
-Eine Woche zuvor war die Schießanlage bereits durch den neuen kath. Pfarrer von Haimbach, Werner Schräder gesegnet worden.
+Eine Woche zuvor war die Schießanlage bereits durch den neuen kath. Pfarrer von Haimbach, Werner Schräder, mit den Messdienern Christian Bosold und Daniel Schneider gesegnet worden.
 
-{{< images "/img/album/1986/segnung.jpg" >}}
+{{< images "/img/album/1986/segnung.jpg|Segnung mit Pfarrer Schräder und Messdienern Daniel Schneider und Christian Bosold" >}}
 
 
 ### 1987
