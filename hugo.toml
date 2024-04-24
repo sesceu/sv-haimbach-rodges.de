@@ -1,4 +1,4 @@
-baseURL = 'https://sv-haimbach-rodges-de.web.app/'
+baseURL = 'https://sv-haimbach-rodges.de'
 languageCode = 'de-DE'
 title = 'Schützenverein Gut Schuß Haimbach/Rodges'
 theme = 'hugo-universal-theme'
