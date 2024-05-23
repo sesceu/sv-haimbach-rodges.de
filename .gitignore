@@ -1,6 +1,7 @@
 # Generated files
 resources/_gen/
 .hugo_build.lock
+public/
 
 # Logs
 logs
