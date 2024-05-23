@@ -3,7 +3,6 @@ title = 'Maiwanderung am 05. Mai 2024'
 date = 2024-05-23T12:00:00+01:00
 draft = false
 banner = "/img/album/2024/Maiwanderung/Maiwanderung24-banner.jpg"
-banner_attribution = "https://commons.wikimedia.org/wiki/File:Fulda,_Landesgartenschau,_Kulturgarten,_Fr%C3%BChlingsblumen.jpg#file"
 +++
 
 Am Sonntag, dem 05. Mai 2025, fand die diesjährige Maiwanderung statt.
