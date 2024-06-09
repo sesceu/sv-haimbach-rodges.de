@@ -5,7 +5,7 @@ draft = false
 banner = "/img/album/2024/Maiwanderung/Maiwanderung24-banner.jpg"
 +++
 
-Am Sonntag, dem 05. Mai 2025, fand die diesjährige Maiwanderung statt.
+Am Sonntag, dem 05. Mai 2024, fand die diesjährige Maiwanderung statt.
 
 Zahlreiche Schützenschwestern und Schützenbrüder mit Ihren Familien trafen sich um __10.30 Uhr am Schützenhaus__ und wanderten von dort durch die Fulda-Aue und das ehemalige Landesgartenschaugelände zur Jugendherberge in Fulda-Neuenberg.
 

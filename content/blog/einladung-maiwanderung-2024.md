@@ -10,7 +10,7 @@ Liebe Schützenschwestern und Schützenbrüder,
 
 gerne möchten wir euch zur diesjährigen Familienwanderung am
 
-__Sonntag, 05. Mai 2025 einladen.__
+__Sonntag, 05. Mai 2024 einladen.__
 
 Wir treffen uns um __10.30 Uhr am Schützenhaus__ und wandern von hier durch die Fulda-Aue und das ehemalige Landesgartenschaugelände zur Jugendherberge in Fulda-Neuenberg.
 
