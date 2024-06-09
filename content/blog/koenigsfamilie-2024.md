@@ -2,7 +2,7 @@
 title = 'Wir haben eine neue Königsfamilie'
 date = 2024-04-01T17:27:00+01:00
 draft = false
-banner = "img/default/logo.png"
+banner = "img/album/2024/koenigsfamilie_2024.jpg"
 +++
 
 Auf der kürzlich durchgeführten Jahreshauptversammlung wurde die mit Spannung erwartete neue Königsfamilie 2024 bekannt gegeben:
