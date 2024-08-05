@@ -1,5 +1,5 @@
 +++
-title = 'Sommerpause: 12.07. bis 29.07.'
+title = 'Sommerpause: 12.07. bis 29.08.'
 date = 2024-07-07T12:00:00+01:00
 draft = false
 banner = "/img/default/sommer.jpg"
