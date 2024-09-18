@@ -9,7 +9,6 @@ layout = 'contact'
 Bürgerhaus Haimbach  
 Hirschweg. 17  
 36041 Fulda  
-Tel.: 0661 / 240 129  
 [E-Mail](mailto:info@sv-haimbach-rodges.de)
 
 Zuständiges Amtsgericht: Amtsgericht Fulda  
