@@ -7,7 +7,7 @@ defaultContentLanguage = "de"
 googleAnalytics = ""
 
 # number of words of summarized post content (default 70)
-summaryLength = 70
+summaryLength = 10
 
 # Define the number of posts per page
 paginate = 10
