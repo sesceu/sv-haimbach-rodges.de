@@ -9,15 +9,17 @@ googleAnalytics = ""
 # number of words of summarized post content (default 70)
 summaryLength = 10
 
-# Define the number of posts per page
-paginate = 10
-
 # not pluralize title pages by default
 pluralizelisttitles = false
 
 assetDir = "static"
 
-timeout = "120s"
+timeout = "360s"
+
+[pagination]
+# Define the number of posts per page
+pagerSize = 10
+
 
 [menu]
 
