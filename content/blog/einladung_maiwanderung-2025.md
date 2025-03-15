@@ -6,7 +6,7 @@ banner = "/img/default/wald.jpg"
 banner_attribution = "https://pixabay.com/de/photos/wald-j%C3%A4ger-h%C3%BCtte-w%C3%A4lder-jagd-2316514/"
 +++
 
-Sehr geehrte Vereinsmitglieder,
+Liebe Vereinsmitglieder,
 
 wir möchten Euch hiermit frühzeitig auf unsere traditionelle Maiwanderung **am Sonntag, den 11. Mai 2025** aufmerksam machen.
 
