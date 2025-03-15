@@ -6,7 +6,7 @@ banner = "img/default/kalender.jpg"
 banner_attribution = "https://unsplash.com/de/fotos/bleistift-auf-geoffnetem-notizbuch-9n1USijYJZ4"
 +++
 
-Sehr geehrte Vereinsmitglieder,
+Liebe Vereinsmitglieder,
 
 hiermit laden wir Euch herzlich zur ordentlichen Jahreshauptversammlung des Schützenvereins ein. Diese findet **am Freitag, den 28. März 2025 um 19:30 Uhr** statt.
 
