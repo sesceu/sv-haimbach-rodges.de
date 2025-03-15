@@ -6,7 +6,7 @@ banner = "img/default/zielscheibe.jpg"
 banner_attribution = "https://unsplash.com/de/fotos/ein-blatt-papier-mit-einem-bild-darauf-NKo_ZNNx3uM"
 +++
 
-Sehr geehrte Schützenschwestern und Schützenbrüder,
+Liebe Schützenschwestern und Schützenbrüder,
 
 der Schützenverein gibt hiermit die Termine für das diesjährige **Königsschießen** sowie das **Siggi-Brandt-Gedächtnispokalschießen** bekannt. Die Wettkämpfe werden an den folgenden Tagen ausgetragen:
 
