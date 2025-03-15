@@ -2,8 +2,8 @@
 title = 'Einladung zum Königsschießen 2025'
 date = 2025-03-15T09:00:00+01:00
 draft = false
-banner = "img/default/gewehr_zielen.jpg"
-banner_attribution = "https://unsplash.com/de/fotos/person-die-auf-die-waffe-zielt-HmMVzPlwM4E"
+banner = "img/default/zielscheibe.jpg"
+banner_attribution = "https://unsplash.com/de/fotos/ein-blatt-papier-mit-einem-bild-darauf-NKo_ZNNx3uM"
 +++
 
 Sehr geehrte Schützenschwestern und Schützenbrüder,
