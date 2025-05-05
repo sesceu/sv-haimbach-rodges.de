@@ -1,6 +1,6 @@
 +++
 title = 'Details zur Maiwanderung 2025'
-date = 2025-03-15T09:00:02+01:00
+date = 2025-05-05T09:00:02+01:00
 draft = false
 banner = "/img/default/waldhuette.png"
 banner_attribution_text = "KI-generiertes Bild mit Gemini von Google"
