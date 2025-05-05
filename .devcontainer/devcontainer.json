@@ -30,6 +30,13 @@
 				"bungcip.better-toml",
 				"davidanson.vscode-markdownlint"
 			]
+		},
+		"codespaces": {
+			"repositories": {
+				"sesceu/hugo-universal-theme": {
+					"permissions": "write-all"
+				}
+			}
 		}
 	},
 
