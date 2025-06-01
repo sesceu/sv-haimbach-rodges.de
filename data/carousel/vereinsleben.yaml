@@ -1,9 +1,10 @@
-weight: 1
+weight: 3
 title: "Vereinsleben"
 description: >
   <ul class="list-style-none">
      <li>gemütliches Beisammensein</li>
      <li>gemeinsame Erfolge</li>
+     <li>miteinander Erleben</li>
   </ul>
-image: "img/carousel/koenigsfamilie_2025.jpg"
+image: "img/album/2024/besuch_proklamation_fd.jpg"
 frame: true
