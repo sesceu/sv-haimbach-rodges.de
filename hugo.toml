@@ -85,7 +85,7 @@ pagerSize = 10
 
     about_us = "<p>Der Schützenverein \"Gut Schuß\" wurde 1986 gegründet und engagiert sich seitdem im Schießsport mit Luftgewehr und Luftpistole.</p>"
     ad = "<h4>Unterstützt durch</h4><a href=\"http://www.foto-wiegand.de/\"><img src=\"/img/default/foto_wiegand.jpg\" height=\"150px\"></a>"
-    copyright = "Copyright (c) 2024, Schützenverein \"Gut Schuß\" Haimbach/Rodges 1986 e.V."
+    copyright = "Copyright (c) 2024 - 2025, Schützenverein \"Gut Schuß\" Haimbach/Rodges 1986 e.V.<br/>Webauftritt: Dr. Sebastian Schneider"
 
     # Format dates with Go's time formatting
     date_format = "2. January 2006"
