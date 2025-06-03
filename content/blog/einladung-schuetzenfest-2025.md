@@ -1,5 +1,5 @@
 +++
-title = 'Einladung zum Schützenfest am 15. Juni 2024'
+title = 'Einladung zum Schützenfest am 15. Juni 2025'
 date = 2025-06-01T12:00:01+01:00
 draft = false
 banner = "img/album/2025/Königsfamilie/Königsfamilie.jpg"
