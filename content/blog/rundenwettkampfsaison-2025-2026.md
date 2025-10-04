@@ -27,8 +27,8 @@ Alle Heimkämpfe können **auf einem Bildschirm in unserem Aufenthaltsraum mitve
 
 Wie in jedem Jahr sind alle Wettkampfergebnisse (Einzel- und Gesamtwertung), die Namen der Schützen und die aktuellen Platzierungen **online abrufbar**:
 
-* **Website:** [Website des Schützenbezirks 27 Fulda-Rhön](https://www.schützenbezirk27.de)
-* Dort wählt bitte unter Rundenwettkämpfe Luftgewehr die Klasse **"Bezirksklasse 2 West"** aus.
+* Website: [Website des Schützenbezirks 27 Fulda-Rhön](https://www.schützenbezirk27.de)
+* Wählt dort -- sobald die Daten vom Schützenbezirk eingestell wurden -- unter Rundenwettkämpfe Luftgewehr die Klasse **"Bezirksklasse 2 West"** aus.
 
 ### Wettkampfplan
 
