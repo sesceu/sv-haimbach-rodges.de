@@ -106,6 +106,34 @@ func handleUploadImage(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("/img/temp/" + filename))
 }
 
+func handleListDefaultImages(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	files, err := os.ReadDir("../static/img/default")
+	if err != nil {
+		http.Error(w, "Failed to read default images: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	var imagePaths []string
+	for _, f := range files {
+		if !f.IsDir() {
+			// Filter for image extensions if needed, but for now assume all files in there are images
+			ext := strings.ToLower(filepath.Ext(f.Name()))
+			if ext == ".jpg" || ext == ".jpeg" || ext == ".png" || ext == ".gif" || ext == ".webp" {
+				// Return web path, not file system path
+				imagePaths = append(imagePaths, "/img/default/"+f.Name())
+			}
+		}
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(imagePaths)
+}
+
 type CreatePostRequest struct {
 	Title     string `json:"title"`
 	Date      string `json:"date"`
@@ -125,9 +153,8 @@ func handleCreatePost(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// 1. Move image to final location
-	// ImagePath is like /img/temp/foo.png. We want to move it to /img/blog/year/foo.png or similar.
-	// For simplicity, let's put it in static/img/blog/
+	// 1. Move or Copy image to final location
+	// ImagePath is like /img/temp/foo.png or /img/default/bar.jpg
 	
 	imgName := filepath.Base(req.ImagePath)
 	finalImgRelPath := "img/blog/" + imgName
@@ -137,12 +164,26 @@ func handleCreatePost(w http.ResponseWriter, r *http.Request) {
 	
 	// Source path (remove leading /)
 	srcPath := filepath.Join("..", "static", strings.TrimPrefix(req.ImagePath, "/"))
-	
-	if err := os.Rename(srcPath, finalImgPath); err != nil {
-		// If rename fails (e.g. cross-device), try copy
-		// For now, just error out or assume it works as it's likely same volume
-		http.Error(w, "Failed to move image: "+err.Error(), http.StatusInternalServerError)
-		return
+
+	// Check if it's a default image or a temp image
+	if strings.Contains(req.ImagePath, "/img/default/") {
+		// Copy default image
+		input, err := os.ReadFile(srcPath)
+		if err != nil {
+			http.Error(w, "Failed to read default image: "+err.Error(), http.StatusInternalServerError)
+			return
+		}
+		if err := os.WriteFile(finalImgPath, input, 0644); err != nil {
+			http.Error(w, "Failed to copy default image: "+err.Error(), http.StatusInternalServerError)
+			return
+		}
+	} else {
+		// Move temp image
+		if err := os.Rename(srcPath, finalImgPath); err != nil {
+			// If rename fails (e.g. cross-device), try copy
+			http.Error(w, "Failed to move image: "+err.Error(), http.StatusInternalServerError)
+			return
+		}
 	}
 
 	// 2. Create Markdown file

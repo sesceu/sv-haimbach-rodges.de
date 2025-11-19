@@ -20,10 +20,9 @@ var cfg Config
 func main() {
 	// Parse flags
 	apiKeyFlag := flag.String("key", "", "Gemini API Key")
-	textModelFlag := flag.String("text-model", "gemini-2.5-flash", "Gemini Text Model to use")
-	imageModelFlag := flag.String("image-model", "imagen-4.0-fast-generate-001", "Gemini Image Model to use")
+	textModelFlag := flag.String("text-model", "models/gemini-2.5-flash", "Gemini Text Model to use")
+	imageModelFlag := flag.String("image-model", "models/gemini-2.0-flash-lite", "Gemini Image Model to use")
 	portFlag := flag.String("port", "8080", "Port to run the server on")
-	listModelsFlag := flag.Bool("list-models", false, "List available Gemini models and exit")
 	flag.Parse()
 
 	// Load config
@@ -33,12 +32,12 @@ func main() {
 	}
 	
 	cfg.TextModel = *textModelFlag
-	if cfg.TextModel == "gemini-2.5-flash" && os.Getenv("GEMINI_TEXT_MODEL") != "" {
+	if cfg.TextModel == "models/gemini-2.5-flash" && os.Getenv("GEMINI_TEXT_MODEL") != "" {
 		cfg.TextModel = os.Getenv("GEMINI_TEXT_MODEL")
 	}
 
 	cfg.ImageModel = *imageModelFlag
-	if cfg.ImageModel == "imagen-4.0-fast-generate-001" && os.Getenv("GEMINI_IMAGE_MODEL") != "" {
+	if cfg.ImageModel == "models/gemini-2.0-flash-lite" && os.Getenv("GEMINI_IMAGE_MODEL") != "" {
 		cfg.ImageModel = os.Getenv("GEMINI_IMAGE_MODEL")
 	}
 
@@ -48,20 +47,18 @@ func main() {
 		log.Fatal("Gemini API Key is required. Set GEMINI_API_KEY env var or use -key flag.")
 	}
 
-	if *listModelsFlag {
-		fmt.Println("Listing available models...")
-		if err := ListModels(); err != nil {
-			log.Fatalf("Failed to list models: %v", err)
-		}
-		return
-	}
-
 	// Setup routes
 	http.HandleFunc("/", handleIndex)
 	http.HandleFunc("/generate-text", handleGenerateText)
 	http.HandleFunc("/generate-image", handleGenerateImage)
 	http.HandleFunc("/upload-image", handleUploadImage)
 	http.HandleFunc("/create-post", handleCreatePost)
+	http.HandleFunc("/list-default-images", handleListDefaultImages)
+
+	// Serve static files (images)
+	// We are running in agent/, so static/ is at ../static/
+	fs := http.FileServer(http.Dir("../static/img"))
+	http.Handle("/img/", http.StripPrefix("/img/", fs))
 
 	// Start server
 	fmt.Printf("Agent started on http://localhost:%s\n", cfg.Port)

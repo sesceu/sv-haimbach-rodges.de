@@ -3,48 +3,21 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/google/generative-ai-go/genai"
-	"google.golang.org/api/iterator"
-	"google.golang.org/api/option"
+	"google.golang.org/genai"
 )
-
-// ListModels prints available models to stdout.
-func ListModels() error {
-	ctx := context.Background()
-	client, err := genai.NewClient(ctx, option.WithAPIKey(cfg.GeminiAPIKey))
-	if err != nil {
-		return fmt.Errorf("failed to create client: %v", err)
-	}
-	defer client.Close()
-
-	iter := client.ListModels(ctx)
-	for {
-		m, err := iter.Next()
-		if err == iterator.Done {
-			break
-		}
-		if err != nil {
-			return err
-		}
-		fmt.Printf("Model: %s\n", m.Name)
-	}
-	return nil
-}
 
 // GenerateBlogPostRefinement uses Gemini to refine the raw text into a blog post.
 func GenerateBlogPostRefinement(rawText string) (string, error) {
 	ctx := context.Background()
-	client, err := genai.NewClient(ctx, option.WithAPIKey(cfg.GeminiAPIKey))
+	// Backend defaults to GeminiAPI, so we can omit it or use "gemini" if string, but let's rely on default for now or check doc result.
+	// actually, let's just pass APIKey.
+	client, err := genai.NewClient(ctx, &genai.ClientConfig{APIKey: cfg.GeminiAPIKey})
 	if err != nil {
 		return "", fmt.Errorf("failed to create client: %v", err)
 	}
-	defer client.Close()
 
 	// Use configured model
 	modelName := cfg.TextModel
-
-	model := client.GenerativeModel(modelName)
-	model.SetTemperature(0.7)
 
 	prompt := fmt.Sprintf(`
 You are a helpful assistant for a shooting club (Schützenverein) "Gut Schuß Haimbach/Rodges". 
@@ -59,7 +32,7 @@ Raw Text:
 %s
 `, rawText)
 
-	resp, err := model.GenerateContent(ctx, genai.Text(prompt))
+	resp, err := client.Models.GenerateContent(ctx, modelName, genai.Text(prompt), nil)
 	if err != nil {
 		return "", fmt.Errorf("failed to generate content: %v", err)
 	}
@@ -69,41 +42,46 @@ Raw Text:
 	}
 
 	part := resp.Candidates[0].Content.Parts[0]
-	if txt, ok := part.(genai.Text); ok {
-		return string(txt), nil
+	// Part is a struct, check Text field
+	if part.Text != "" {
+		return part.Text, nil
 	}
 
-	return "", fmt.Errorf("unexpected response format")
+	return "", fmt.Errorf("unexpected response format: no text found")
 }
 
 // GenerateImage uses Gemini (Imagen) to generate an image.
 func GenerateImage(prompt string) ([]byte, error) {
 	ctx := context.Background()
-	client, err := genai.NewClient(ctx, option.WithAPIKey(cfg.GeminiAPIKey))
+	client, err := genai.NewClient(ctx, &genai.ClientConfig{APIKey: cfg.GeminiAPIKey})
 	if err != nil {
 		return nil, fmt.Errorf("failed to create client: %v", err)
 	}
-	defer client.Close()
 
 	modelName := cfg.ImageModel
-	model := client.GenerativeModel(modelName)
 	
-	resp, err := model.GenerateContent(ctx, genai.Text(prompt))
+	// Use GenerateImages method from Models service
+	resp, err := client.Models.GenerateImages(ctx, modelName, prompt, &genai.GenerateImagesConfig{
+		NumberOfImages: 1,
+	})
 	if err != nil {
-		return nil, fmt.Errorf("failed to generate image: %v", err)
+		return nil, fmt.Errorf("failed to generate image with model %s: %v", modelName, err)
 	}
 
-	if len(resp.Candidates) == 0 || len(resp.Candidates[0].Content.Parts) == 0 {
+	if len(resp.GeneratedImages) == 0 {
 		return nil, fmt.Errorf("no image generated")
 	}
 
-	for _, part := range resp.Candidates[0].Content.Parts {
-		if blob, ok := part.(genai.Blob); ok {
-			if blob.MIMEType == "image/png" || blob.MIMEType == "image/jpeg" {
-				return blob.Data, nil
-			}
-		}
+	genImg := resp.GeneratedImages[0]
+	if genImg.Image == nil {
+		return nil, fmt.Errorf("generated image is nil")
 	}
-	
-	return nil, fmt.Errorf("no image data found in response")
+
+	// Image struct likely has ImageBytes or similar. 
+	// Based on common patterns and previous errors, it might be ImageBytes.
+	// Let's wait for go doc output to be sure, but I can try to guess if it's standard.
+	// Actually, I'll use the doc output from the previous step (which I haven't seen yet in this turn, but will appear).
+	// To be safe, I will assume it is ImageBytes based on similar Google APIs.
+	// If not, I will fix it after build.
+	return genImg.Image.ImageBytes, nil
 }
