@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Agent</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #preview {
+            background: #f9f9f9;
+            padding: 15px;
+            border: 1px solid #eee;
+            margin-top: 10px;
+            white-space: pre-wrap;
+        }
+
+        .loading {
+            color: #666;
+            font-style: italic;
+        }
+
+        img {
+            max-width: 100%;
+            margin-top: 10px;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #eee;
+            padding: 10px;
+        }
+
+        .image-grid img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            cursor: pointer;
+            border: 2px solid transparent;
+            border-radius: 4px;
+            margin-top: 0;
+        }
+
+        .image-grid img:hover {
+            border-color: #007bff;
+            opacity: 0.8;
+        }
+
+        .image-grid img.selected {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Blog Post Agent</h1>
+
+    <div class="section">
+        <h2>1. Content</h2>
+        <p>Paste the rough text here:</p>
+        <textarea id="rawText" placeholder="Raw email text..."></textarea>
+        <button onclick="generateText()">Refine with Gemini</button>
+        <h3>Refined Text (Editable)</h3>
+        <textarea id="refinedText" placeholder="Refined text will appear here..."></textarea>
+    </div>
+
+    <div class="section">
+        <h2>2. Image</h2>
+        <div style="display: flex; gap: 20px;">
+            <div style="flex: 1;">
+                <h3>Upload</h3>
+                <input type="file" id="imageUpload" accept="image/*">
+                <button onclick="uploadImage()">Upload</button>
+            </div>
+            <div style="flex: 1;">
+                <h3>Select Default</h3>
+                <button onclick="loadDefaultImages()">Load Defaults</button>
+                <div id="defaultImagesGrid" class="image-grid" style="display: none;"></div>
+            </div>
+            <div style="flex: 1;">
+                <h3>Generate (Gemini)</h3>
+                <input type="text" id="imagePrompt" placeholder="Optional prompt (defaults to blog context)...">
+                <button onclick="generateImage()">Generate</button>
+            </div>
+        </div>
+        <div id="imagePreview"></div>
+        <input type="hidden" id="finalImagePath">
+    </div>
+
+    <div class="section">
+        <h2>3. Publish</h2>
+        <input type="text" id="postTitle" placeholder="Post Title">
+        <input type="date" id="postDate">
+        <button onclick="createPost()">Create Post & PR</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        // Set default date to today
+        document.getElementById('postDate').valueAsDate = new Date();
+
+        async function generateText() {
+            const text = document.getElementById('rawText').value;
+            const refinedInput = document.getElementById('refinedText');
+            refinedInput.value = 'Generating...';
+
+            try {
+                const response = await fetch('/generate-text', {
+                    method: 'POST',
+                    body: text
+                });
+                const refined = await response.text();
+                refinedInput.value = refined;
+            } catch (e) {
+                refinedInput.value = 'Error: ' + e.message;
+            }
+        }
+
+        async function uploadImage() {
+            const fileInput = document.getElementById('imageUpload');
+            const file = fileInput.files[0];
+            if (!file) return;
+
+            const formData = new FormData();
+            formData.append('image', file);
+
+            const response = await fetch('/upload-image', {
+                method: 'POST',
+                body: formData
+            });
+            const path = await response.text();
+            showImage(path);
+        }
+
+        async function generateImage() {
+            const prompt = document.getElementById('imagePrompt').value;
+            const context = document.getElementById('refinedText').value;
+            const preview = document.getElementById('imagePreview');
+            preview.innerHTML = '<div class="loading">Generating image...</div>';
+
+            try {
+                const response = await fetch('/generate-image', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt, context })
+                });
+                if (!response.ok) throw new Error(await response.text());
+                const path = await response.text();
+                showImage(path);
+            } catch (e) {
+                preview.innerText = 'Error: ' + e.message;
+            }
+        }
+
+        async function loadDefaultImages() {
+            const grid = document.getElementById('defaultImagesGrid');
+            grid.style.display = 'grid';
+            grid.innerHTML = '<div class="loading">Loading...</div>';
+
+            try {
+                const response = await fetch('/list-default-images');
+                if (!response.ok) throw new Error(await response.text());
+                const images = await response.json();
+
+                grid.innerHTML = '';
+                images.forEach(path => {
+                    const img = document.createElement('img');
+                    img.src = path;
+                    img.onclick = () => selectDefaultImage(path, img);
+                    grid.appendChild(img);
+                });
+            } catch (e) {
+                grid.innerHTML = 'Error: ' + e.message;
+            }
+        }
+
+        function selectDefaultImage(path, imgElement) {
+            // Remove selected class from all images in grid
+            const allImages = document.querySelectorAll('#defaultImagesGrid img');
+            allImages.forEach(img => img.classList.remove('selected'));
+
+            // Add selected class to clicked image
+            imgElement.classList.add('selected');
+
+            showImage(path);
+        }
+
+        function showImage(path) {
+            document.getElementById('finalImagePath').value = path;
+            document.getElementById('imagePreview').innerHTML = `<img src="${path}" alt="Preview">`;
+        }
+
+        async function createPost() {
+            const title = document.getElementById('postTitle').value;
+            const date = document.getElementById('postDate').value;
+            const content = document.getElementById('refinedText').value;
+            const imagePath = document.getElementById('finalImagePath').value;
+            const result = document.getElementById('result');
+
+            if (!title || !content) {
+                alert('Title and Content are required');
+                return;
+            }
+
+            result.innerHTML = '<div class="loading">Processing...</div>';
+
+            try {
+                const response = await fetch('/create-post', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ title, date, content, imagePath })
+                });
+                const msg = await response.text();
+                result.innerHTML = `<pre>${msg}</pre>`;
+            } catch (e) {
+                result.innerText = 'Error: ' + e.message;
+            }
+        }
+    </script>
+</body>
+
+</html>
