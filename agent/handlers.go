@@ -64,7 +64,7 @@ func handleGenerateImage(w http.ResponseWriter, r *http.Request) {
 	// Save to temp file to serve
 	filename := fmt.Sprintf("gen-%d.png", time.Now().Unix())
 	path := filepath.Join("..", "static", "img", "temp", filename)
-	
+
 	// Ensure dir exists
 	os.MkdirAll(filepath.Dir(path), 0755)
 
@@ -91,7 +91,7 @@ func handleUploadImage(w http.ResponseWriter, r *http.Request) {
 
 	filename := fmt.Sprintf("upload-%d%s", time.Now().Unix(), filepath.Ext(header.Filename))
 	path := filepath.Join("..", "static", "img", "temp", filename)
-	
+
 	os.MkdirAll(filepath.Dir(path), 0755)
 
 	out, err := os.Create(path)
@@ -134,20 +134,25 @@ func handleListDefaultImages(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(imagePaths)
 }
 
-type CreatePostRequest struct {
+type PreparePostRequest struct {
 	Title     string `json:"title"`
 	Date      string `json:"date"`
 	Content   string `json:"content"`
 	ImagePath string `json:"imagePath"`
 }
 
-func handleCreatePost(w http.ResponseWriter, r *http.Request) {
+type PreparePostResponse struct {
+	BranchName string `json:"branchName"`
+	Diff       string `json:"diff"`
+}
+
+func handlePreparePost(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
 
-	var req CreatePostRequest
+	var req PreparePostRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
@@ -155,35 +160,46 @@ func handleCreatePost(w http.ResponseWriter, r *http.Request) {
 
 	// 1. Move or Copy image to final location
 	// ImagePath is like /img/temp/foo.png or /img/default/bar.jpg
-	
-	imgName := filepath.Base(req.ImagePath)
-	finalImgRelPath := "img/blog/" + imgName
-	finalImgPath := filepath.Join("..", "static", "img", "blog", imgName)
-	
-	os.MkdirAll(filepath.Dir(finalImgPath), 0755)
-	
-	// Source path (remove leading /)
-	srcPath := filepath.Join("..", "static", strings.TrimPrefix(req.ImagePath, "/"))
 
-	// Check if it's a default image or a temp image
+	var finalImgRelPath string
+	var filesToCommit []string
+
+	// Check if it's a default image
 	if strings.Contains(req.ImagePath, "/img/default/") {
-		// Copy default image
-		input, err := os.ReadFile(srcPath)
-		if err != nil {
-			http.Error(w, "Failed to read default image: "+err.Error(), http.StatusInternalServerError)
-			return
-		}
-		if err := os.WriteFile(finalImgPath, input, 0644); err != nil {
-			http.Error(w, "Failed to copy default image: "+err.Error(), http.StatusInternalServerError)
-			return
-		}
+		// Use existing default image directly
+		finalImgRelPath = "img/default/" + filepath.Base(req.ImagePath)
+		// We do NOT copy the file.
+		// We do NOT add the image to git commit (it's already there).
 	} else {
+		// It's a temp/uploaded/generated image. Move/Copy to img/blog/
+		imgName := filepath.Base(req.ImagePath)
+		finalImgRelPath = "img/blog/" + imgName
+		finalImgPath := filepath.Join("..", "static", "img", "blog", imgName)
+
+		os.MkdirAll(filepath.Dir(finalImgPath), 0755)
+
+		// Source path (remove leading /)
+		srcPath := filepath.Join("..", "static", strings.TrimPrefix(req.ImagePath, "/"))
+
 		// Move temp image
 		if err := os.Rename(srcPath, finalImgPath); err != nil {
 			// If rename fails (e.g. cross-device), try copy
-			http.Error(w, "Failed to move image: "+err.Error(), http.StatusInternalServerError)
-			return
+			// Fallback to copy if rename fails
+			input, err := os.ReadFile(srcPath)
+			if err != nil {
+				http.Error(w, "Failed to read temp image: "+err.Error(), http.StatusInternalServerError)
+				return
+			}
+			if err := os.WriteFile(finalImgPath, input, 0644); err != nil {
+				http.Error(w, "Failed to write blog image: "+err.Error(), http.StatusInternalServerError)
+				return
+			}
+			// Try to remove temp file, ignore error
+			os.Remove(srcPath)
 		}
+
+		// Add to git commit
+		filesToCommit = append(filesToCommit, filepath.Join("static", finalImgRelPath))
 	}
 
 	// 2. Create Markdown file
@@ -206,31 +222,59 @@ banner = "/%s"
 		return
 	}
 
-	// 3. Git Automation
+	// 3. Git Automation (Local only)
 	branchName, err := GitCreateBranch(req.Title)
 	if err != nil {
 		http.Error(w, "Git branch failed: "+err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	files := []string{
-		filepath.Join("content", "blog", mdFilename),
-		filepath.Join("static", finalImgRelPath),
-	}
-	
-	if err := GitAddAndCommit(files, "Add blog post: "+req.Title); err != nil {
+	filesToCommit = append(filesToCommit, filepath.Join("content", "blog", mdFilename))
+
+	if err := GitAddAndCommit(filesToCommit, "Add blog post: "+req.Title); err != nil {
 		http.Error(w, "Git commit failed: "+err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	if err := GitPush(branchName); err != nil {
+	// Get Diff
+	diff, err := GitDiff()
+	if err != nil {
+		http.Error(w, "Git diff failed: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(PreparePostResponse{
+		BranchName: branchName,
+		Diff:       diff,
+	})
+}
+
+type PublishPostRequest struct {
+	BranchName string `json:"branchName"`
+	Title      string `json:"title"` // Needed for PR title
+}
+
+func handlePublishPost(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	var req PublishPostRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	if err := GitPush(req.BranchName); err != nil {
 		http.Error(w, "Git push failed: "+err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	// 4. PR
+	// PR
 	prURL, err := GitHubCreatePR(req.Title, "Automated blog post creation")
-	msg := fmt.Sprintf("Success! Branch '%s' pushed.", branchName)
+	msg := fmt.Sprintf("Success! Branch '%s' pushed.", req.BranchName)
 	if err == nil {
 		msg += fmt.Sprintf("\nPR Created: %s", prURL)
 	} else {
