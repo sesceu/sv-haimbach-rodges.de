@@ -17,6 +17,4 @@ Wie gewohnt haben wir für euch unseren Weihnachtsflyer vorbereitet, den ihr unt
 
 Wir wünschen euch allen eine besinnliche Adventszeit, frohe Weihnachten und einen guten Rutsch ins neue Jahr!
 
-**Wir freuen uns darauf, euch alle im Januar 2026 wieder im Schützenhaus begrüßen zu dürfen!**
-
 {{< images "/img/album/2025/Weihnachtsflyer-Aussenseite2025.jpg|Weihnachtsflyer 1" "/img/album/2025/Weihnachtsflyer-Innenseite2025.jpg|Weihnachtsflyer 2">}}
