@@ -3,6 +3,7 @@ title = 'Jahresabschluss und Winterpause'
 date = 2025-11-23T12:00:00+01:00
 draft = false
 banner = "/img/default/gluehwein.jpg"
+banner_attribution = "https://pixabay.com/de/photos/winter-schnee-kalt-tee-wein-4606871/"
 +++
 
 Liebe Schützenschwestern und Schützenbrüder, liebe Freunde unseres Vereins,
