@@ -128,6 +128,11 @@
         </div>
         <div id="imagePreview"></div>
         <input type="hidden" id="finalImagePath">
+
+        <div style="margin-top: 10px;">
+            <label for="bannerAttribution">Banner Attribution (URL):</label>
+            <input type="text" id="bannerAttribution" placeholder="https://pixabay.com/...">
+        </div>
     </div>
 
     <div class="section">
@@ -219,10 +224,10 @@
                 const images = await response.json();
 
                 grid.innerHTML = '';
-                images.forEach(path => {
+                images.forEach(imgData => {
                     const img = document.createElement('img');
-                    img.src = path;
-                    img.onclick = () => selectDefaultImage(path, img);
+                    img.src = imgData.path;
+                    img.onclick = () => selectDefaultImage(imgData.path, imgData.attribution, img);
                     grid.appendChild(img);
                 });
             } catch (e) {
@@ -230,7 +235,7 @@
             }
         }
 
-        function selectDefaultImage(path, imgElement) {
+        function selectDefaultImage(path, attribution, imgElement) {
             // Remove selected class from all images in grid
             const allImages = document.querySelectorAll('#defaultImagesGrid img');
             allImages.forEach(img => img.classList.remove('selected'));
@@ -239,6 +244,13 @@
             imgElement.classList.add('selected');
 
             showImage(path);
+
+            // Set attribution if available
+            if (attribution) {
+                document.getElementById('bannerAttribution').value = attribution;
+            } else {
+                document.getElementById('bannerAttribution').value = '';
+            }
         }
 
         function showImage(path) {
@@ -251,6 +263,7 @@
             const date = document.getElementById('postDate').value;
             const content = document.getElementById('refinedText').value;
             const imagePath = document.getElementById('finalImagePath').value;
+            const bannerAttribution = document.getElementById('bannerAttribution').value;
             const result = document.getElementById('prepareResult');
             const publishSection = document.getElementById('publishSection');
 
@@ -266,7 +279,7 @@
                 const response = await fetch('/prepare-post', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ title, date, content, imagePath })
+                    body: JSON.stringify({ title, date, content, imagePath, bannerAttribution })
                 });
 
                 if (!response.ok) throw new Error(await response.text());

@@ -118,27 +118,41 @@ func handleListDefaultImages(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var imagePaths []string
+	// Load metadata
+	metadata := make(map[string]string)
+	metaDataBytes, err := os.ReadFile("../static/img/default/metadata.json")
+	if err == nil {
+		json.Unmarshal(metaDataBytes, &metadata)
+	}
+
+	type DefaultImage struct {
+		Path        string `json:"path"`
+		Attribution string `json:"attribution"`
+	}
+
+	var images []DefaultImage
 	for _, f := range files {
 		if !f.IsDir() {
-			// Filter for image extensions if needed, but for now assume all files in there are images
 			ext := strings.ToLower(filepath.Ext(f.Name()))
 			if ext == ".jpg" || ext == ".jpeg" || ext == ".png" || ext == ".gif" || ext == ".webp" {
-				// Return web path, not file system path
-				imagePaths = append(imagePaths, "/img/default/"+f.Name())
+				images = append(images, DefaultImage{
+					Path:        "/img/default/" + f.Name(),
+					Attribution: metadata[f.Name()],
+				})
 			}
 		}
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(imagePaths)
+	json.NewEncoder(w).Encode(images)
 }
 
 type PreparePostRequest struct {
-	Title     string `json:"title"`
-	Date      string `json:"date"`
-	Content   string `json:"content"`
-	ImagePath string `json:"imagePath"`
+	Title             string `json:"title"`
+	Date              string `json:"date"`
+	Content           string `json:"content"`
+	ImagePath         string `json:"imagePath"`
+	BannerAttribution string `json:"bannerAttribution"`
 }
 
 type PreparePostResponse struct {
@@ -203,19 +217,31 @@ func handlePreparePost(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// 2. Create Markdown file
+	// Parse date to get year
+	parsedDate, err := time.Parse("2006-01-02", req.Date)
+	year := ""
+	if err == nil {
+		year = fmt.Sprintf("-%d", parsedDate.Year())
+	}
+
 	slug := slugify(req.Title)
-	mdFilename := fmt.Sprintf("%s.md", slug)
+	mdFilename := fmt.Sprintf("%s%s.md", slug, year)
 	mdPath := filepath.Join("..", "content", "blog", mdFilename)
+
+	attributionLine := ""
+	if req.BannerAttribution != "" {
+		attributionLine = fmt.Sprintf("banner_attribution = \"%s\"\n", req.BannerAttribution)
+	}
 
 	mdContent := fmt.Sprintf(`+++
 title = '%s'
 date = %sT12:00:00+01:00
 draft = false
 banner = "/%s"
-+++
+%s+++
 
 %s
-`, req.Title, req.Date, finalImgRelPath, req.Content)
+`, req.Title, req.Date, finalImgRelPath, attributionLine, req.Content)
 
 	if err := os.WriteFile(mdPath, []byte(mdContent), 0644); err != nil {
 		http.Error(w, "Failed to write markdown: "+err.Error(), http.StatusInternalServerError)
