@@ -40,6 +40,17 @@ func GitAddAndCommit(files []string, message string) error {
 	return nil
 }
 
+// GitDiff returns the diff of the last commit.
+func GitDiff() (string, error) {
+	cmd := exec.Command("git", "show", "--stat", "--patch", "HEAD")
+	cmd.Dir = ".."
+	out, err := cmd.CombinedOutput()
+	if err != nil {
+		return "", fmt.Errorf("git show failed: %s, %v", string(out), err)
+	}
+	return string(out), nil
+}
+
 // GitPush pushes the branch to origin.
 func GitPush(branchName string) error {
 	cmd := exec.Command("git", "push", "-u", "origin", branchName)

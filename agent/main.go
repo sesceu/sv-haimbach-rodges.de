@@ -30,7 +30,7 @@ func main() {
 	if cfg.GeminiAPIKey == "" {
 		cfg.GeminiAPIKey = os.Getenv("GEMINI_API_KEY")
 	}
-	
+
 	cfg.TextModel = *textModelFlag
 	if cfg.TextModel == "models/gemini-2.5-flash" && os.Getenv("GEMINI_TEXT_MODEL") != "" {
 		cfg.TextModel = os.Getenv("GEMINI_TEXT_MODEL")
@@ -52,7 +52,8 @@ func main() {
 	http.HandleFunc("/generate-text", handleGenerateText)
 	http.HandleFunc("/generate-image", handleGenerateImage)
 	http.HandleFunc("/upload-image", handleUploadImage)
-	http.HandleFunc("/create-post", handleCreatePost)
+	http.HandleFunc("/prepare-post", handlePreparePost)
+	http.HandleFunc("/publish-post", handlePublishPost)
 	http.HandleFunc("/list-default-images", handleListDefaultImages)
 
 	// Serve static files (images)

@@ -134,8 +134,21 @@
         <h2>3. Publish</h2>
         <input type="text" id="postTitle" placeholder="Post Title">
         <input type="date" id="postDate">
-        <button onclick="createPost()">Create Post & PR</button>
-        <div id="result"></div>
+
+        <div id="prepareSection">
+            <button onclick="preparePost()">Prepare Post (Create Branch & Commit)</button>
+        </div>
+
+        <div id="prepareResult"></div>
+
+        <div id="publishSection"
+            style="display: none; margin-top: 20px; border-top: 1px solid #eee; padding-top: 20px;">
+            <h3>4. Review & Publish</h3>
+            <p>Review the diff above. If it looks good, publish to GitHub.</p>
+            <input type="hidden" id="branchName">
+            <button onclick="publishPost()" style="background-color: #28a745;">Push & Create PR</button>
+            <div id="publishResult"></div>
+        </div>
     </div>
 
     <script>
@@ -233,31 +246,79 @@
             document.getElementById('imagePreview').innerHTML = `<img src="${path}" alt="Preview">`;
         }
 
-        async function createPost() {
+        async function preparePost() {
             const title = document.getElementById('postTitle').value;
             const date = document.getElementById('postDate').value;
             const content = document.getElementById('refinedText').value;
             const imagePath = document.getElementById('finalImagePath').value;
-            const result = document.getElementById('result');
+            const result = document.getElementById('prepareResult');
+            const publishSection = document.getElementById('publishSection');
 
             if (!title || !content) {
                 alert('Title and Content are required');
                 return;
             }
 
-            result.innerHTML = '<div class="loading">Processing...</div>';
+            result.innerHTML = '<div class="loading">Preparing...</div>';
+            publishSection.style.display = 'none';
 
             try {
-                const response = await fetch('/create-post', {
+                const response = await fetch('/prepare-post', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ title, date, content, imagePath })
+                });
+
+                if (!response.ok) throw new Error(await response.text());
+
+                const data = await response.json();
+
+                document.getElementById('branchName').value = data.branchName;
+
+                result.innerHTML = `
+                    <div style="background: #e9ecef; padding: 10px; border-radius: 4px; margin-top: 10px;">
+                        <strong>Branch Created:</strong> ${data.branchName}<br>
+                        <strong>Git Diff:</strong>
+                        <pre style="background: #333; color: #fff; padding: 10px; overflow-x: auto; max-height: 400px;">${escapeHtml(data.diff)}</pre>
+                    </div>
+                `;
+
+                publishSection.style.display = 'block';
+
+            } catch (e) {
+                result.innerText = 'Error: ' + e.message;
+            }
+        }
+
+        async function publishPost() {
+            const branchName = document.getElementById('branchName').value;
+            const title = document.getElementById('postTitle').value;
+            const result = document.getElementById('publishResult');
+
+            result.innerHTML = '<div class="loading">Publishing...</div>';
+
+            try {
+                const response = await fetch('/publish-post', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ branchName, title })
                 });
                 const msg = await response.text();
                 result.innerHTML = `<pre>${msg}</pre>`;
             } catch (e) {
                 result.innerText = 'Error: ' + e.message;
             }
+        }
+
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, function (m) { return map[m]; });
         }
     </script>
 </body>
