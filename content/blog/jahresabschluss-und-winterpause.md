@@ -1,0 +1,20 @@
++++
+title = 'Jahresabschluss und Winterpause'
+date = 2025-11-23T12:00:00+01:00
+draft = false
+banner = "/img/blog/gluehwein.jpg"
++++
+
+Liebe Schützenschwestern und Schützenbrüder, liebe Freunde unseres Vereins,
+
+bevor wir uns in die wohlverdiente Winterpause begeben, möchten wir das Jahr gemeinsam festlich ausklingen lassen. **Am Freitag, den 19. Dezember 2025**, laden wir euch herzlich zu unserem traditionellen Jahresabschluss mit gemütlichem Glühweintrinken ein. Dies ist eine wunderbare Gelegenheit, sich in geselliger Runde zu treffen und auf das vergangene Sportjahr zurückzublicken. Wir freuen uns darauf, viele von euch dort zu sehen!
+
+Anschließend verabschieden wir uns in die **Winterpause**. Diese beginnt am Samstag, den 20. Dezember 2025, und endet am Donnerstag, den 15. Januar 2026.** In dieser Zeit bleibt unsere Anlage geschlossen.
+
+Wir freuen uns schon darauf, euch im neuen Jahr wieder bei uns begrüßen zu dürfen. Der **erste offizielle Schießtag im neuen Jahr ist dann Freitag, der 16. Januar 2026.**
+
+Wie gewohnt haben wir für euch unseren Weihnachtsflyer vorbereitet, den ihr unten angehängt findet. Darin findet ihr bereits jetzt alle wichtigen Termine für das nächste Jahr.
+
+Wir wünschen euch allen eine besinnliche Adventszeit, frohe Weihnachten und einen guten Rutsch ins neue Jahr!
+
+**Wir freuen uns darauf, euch alle im Januar 2026 wieder im Schützenhaus begrüßen zu dürfen!**
