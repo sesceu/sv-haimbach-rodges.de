@@ -1,5 +1,5 @@
 +++
-title = 'Jahreshauptversammlung 2026'
+title = 'Jahres-Hauptversammlung 2026'
 date = 2026-02-03T12:00:00+01:00
 draft = false
 banner = "/img/default/logo.png"
