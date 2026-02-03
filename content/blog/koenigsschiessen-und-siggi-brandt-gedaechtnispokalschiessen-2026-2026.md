@@ -1,5 +1,5 @@
 +++
-title = 'Königsschießen und Siggi-Brandt-Gedächtnispokalschießen 2026'
+title = 'Königsschießen und Siggi-Brandt-Gedächtnispokal-schießen 2026'
 date = 2026-02-03T12:00:00+01:00
 draft = false
 banner = "/img/default/zielscheibe.jpg"
